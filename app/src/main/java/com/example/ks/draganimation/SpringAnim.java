@@ -1,7 +1,6 @@
 package com.example.ks.draganimation;
 
 import android.animation.Animator;
-import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.animation.DynamicAnimation;
@@ -14,7 +13,7 @@ import android.widget.ImageView;
 
 public class SpringAnim extends AppCompatActivity implements View.OnClickListener {
 
-    ImageView v, imageView, yes, no;
+    ImageView v, imageView, yes, no, star;
 
     FloatPropertyCompat<View> scale;
     SpringAnimation animationScale;
@@ -26,6 +25,7 @@ public class SpringAnim extends AppCompatActivity implements View.OnClickListene
     public static final float STIFFNESS_MEDIUM = 300;
     public static final long DURATION_500 = 500;
     public static final long DURATION_750 = 750;
+    public static final long DELAY = 100;
 
 
     @Override
@@ -36,6 +36,7 @@ public class SpringAnim extends AppCompatActivity implements View.OnClickListene
         imageView = findViewById(R.id.iv);
         yes = findViewById(R.id.yes);
         no = findViewById(R.id.no);
+        star = findViewById(R.id.star);
 
         yes.setOnClickListener(this);
 
@@ -152,7 +153,7 @@ public class SpringAnim extends AppCompatActivity implements View.OnClickListene
                         }).start();
 
                     }
-                },300);
+                }, DELAY);
 
             }
         });
@@ -162,9 +163,15 @@ public class SpringAnim extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.yes:
+                goToTheAccel();
                 break;
         }
+    }
+
+    private void goToTheAccel() {
+        star.setVisibility(View.VISIBLE);
+        star.animate().scaleX(2000f).scaleY(2000f).alpha(0).setDuration(500).start();
     }
 }
