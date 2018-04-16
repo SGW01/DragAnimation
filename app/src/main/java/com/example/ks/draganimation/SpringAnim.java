@@ -41,7 +41,6 @@ public class SpringAnim extends AppCompatActivity {
             }
         };
         animate();
-      //  animate(50, 0.5f, 10f, -550f, 250f, 5f, 5f, 1000, 3, v);
 
     }
 
