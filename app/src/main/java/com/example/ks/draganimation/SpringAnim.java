@@ -24,6 +24,8 @@ public class SpringAnim extends AppCompatActivity implements View.OnClickListene
     public static final float START_VELOCITY_15 = 1.5f;
     public static final float STIFFNESS_LOW = 50;
     public static final float STIFFNESS_MEDIUM = 300;
+    public static final long DURATION_500 = 500;
+    public static final long DURATION_750 = 750;
 
 
     @Override
@@ -71,7 +73,7 @@ public class SpringAnim extends AppCompatActivity implements View.OnClickListene
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        v.animate().translationX(-250f).translationY(-550f).scaleX(5f).scaleY(5f).setDuration(1000).setListener(new Animator.AnimatorListener() {
+                        v.animate().translationX(-250f).translationY(-550f).scaleX(5f).scaleY(5f).setDuration(DURATION_750).setListener(new Animator.AnimatorListener() {
                             @Override
                             public void onAnimationStart(Animator animation) {
 
@@ -90,7 +92,7 @@ public class SpringAnim extends AppCompatActivity implements View.OnClickListene
                                 animationScale.addEndListener(new DynamicAnimation.OnAnimationEndListener() {
                                     @Override
                                     public void onAnimationEnd(DynamicAnimation animation, boolean canceled, float value, float velocity) {
-                                        imageView.animate().translationX(-250f).translationY(150f).scaleX(5f).scaleY(9.5f).setDuration(1000).setListener(new Animator.AnimatorListener() {
+                                        imageView.animate().translationX(-250f).translationY(150f).scaleX(5f).scaleY(9.5f).setDuration(DURATION_500).setListener(new Animator.AnimatorListener() {
                                             @Override
                                             public void onAnimationStart(Animator animation) {
                                             }
