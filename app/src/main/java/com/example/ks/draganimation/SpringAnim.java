@@ -31,95 +31,123 @@ public class SpringAnim extends AppCompatActivity {
         scale = new FloatPropertyCompat<View>("scale") {
             @Override
             public float getValue(View view) {
-                // return the value of any one property
                 return view.getScaleX();
             }
 
             @Override
             public void setValue(View view, float value) {
-                // Apply the same value to two properties
                 view.setScaleX(value);
                 view.setScaleY(value);
             }
         };
-        animate(50, 0.5f, 10f, -550f, 250f, 5f, 5f, 1000, 3, v);
+        animate();
+      //  animate(50, 0.5f, 10f, -550f, 250f, 5f, 5f, 1000, 3, v);
 
     }
 
 
-    private void animate(float stiffness, float startValue, float finalPos,
-                         final float translationY, final float translationX,
-                         final float scaleX, final float scaleY,
-                         final long duration, final int animationNumber, final View view) {
-        animationScale = new SpringAnimation(view, scale);
-        view.setVisibility(View.VISIBLE);
-        view.setTag(animationNumber);
-        animationScale.setStartValue(startValue);
-        animationScale.setSpring(new SpringForce().setFinalPosition(finalPos));
+    private void animate() {
+        animationScale = new SpringAnimation(v, scale);
+        v.setVisibility(View.VISIBLE);
+        animationScale.setStartValue(0.5f);
+        animationScale.setSpring(new SpringForce().setFinalPosition(10f));
         animationScale.setMinimumVisibleChange(
                 DynamicAnimation.MIN_VISIBLE_CHANGE_SCALE);
-        animationScale.getSpring().setDampingRatio(0.5f).setStiffness(stiffness);
+        animationScale.getSpring().setDampingRatio(0.5f).setStiffness(50);
         animationScale.setStartVelocity(0.5f);
-
-
-
         animationScale.addEndListener(new DynamicAnimation.OnAnimationEndListener() {
             @Override
             public void onAnimationEnd(DynamicAnimation animation, boolean canceled, float value, float velocity) {
-                animationScale.removeEndListener(this);
+
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        view.animate().translationY(translationY).translationX(-translationX).scaleX(scaleX).scaleY(scaleY).setDuration(duration).setUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        v.animate().translationX(-250f).translationY(-550f).scaleX(5f).scaleY(5f).setDuration(1000).setListener(new Animator.AnimatorListener() {
+                            @Override
+                            public void onAnimationStart(Animator animation) {
+
+                            }
 
                             @Override
-                            public void onAnimationUpdate(ValueAnimator animation) {
-                                animation.addListener(new Animator.AnimatorListener() {
+                            public void onAnimationEnd(Animator animation) {
+                                animationScale = new SpringAnimation(imageView, scale);
+                                imageView.setVisibility(View.VISIBLE);
+                                animationScale.setStartValue(0.5f);
+                                animationScale.setSpring(new SpringForce().setFinalPosition(10f));
+                                animationScale.setMinimumVisibleChange(
+                                        DynamicAnimation.MIN_VISIBLE_CHANGE_SCALE);
+                                animationScale.getSpring().setDampingRatio(0.5f).setStiffness(100);
+                                animationScale.setStartVelocity(0.5f);
+                                animationScale.addEndListener(new DynamicAnimation.OnAnimationEndListener() {
                                     @Override
-                                    public void onAnimationStart(Animator animation) {
+                                    public void onAnimationEnd(DynamicAnimation animation, boolean canceled, float value, float velocity) {
+                                        imageView.animate().translationX(-250f).translationY(150f).scaleX(5f).scaleY(9.5f).setDuration(1000).setListener(new Animator.AnimatorListener() {
+                                            @Override
+                                            public void onAnimationStart(Animator animation) {
+                                            }
 
-                                    }
+                                            @Override
+                                            public void onAnimationEnd(Animator animation) {
+                                                animationScale = new SpringAnimation(no, scale);
+                                                no.setVisibility(View.VISIBLE);
+                                                animationScale.setStartValue(0);
+                                                animationScale.setSpring(new SpringForce().setFinalPosition(45f));
+                                                animationScale.setMinimumVisibleChange(
+                                                        DynamicAnimation.MIN_VISIBLE_CHANGE_SCALE);
+                                                animationScale.getSpring().setDampingRatio(0.5f).setStiffness(100);
+                                                animationScale.setStartVelocity(0.5f);
+                                                animationScale.addEndListener(new DynamicAnimation.OnAnimationEndListener() {
+                                                    @Override
+                                                    public void onAnimationEnd(DynamicAnimation animation, boolean canceled, float value, float velocity) {
+                                                        animationScale = new SpringAnimation(yes, scale);
+                                                        yes.setVisibility(View.VISIBLE);
+                                                        animationScale.setStartValue(0);
+                                                        animationScale.setSpring(new SpringForce().setFinalPosition(75f));
+                                                        animationScale.setMinimumVisibleChange(
+                                                                DynamicAnimation.MIN_VISIBLE_CHANGE_SCALE);
+                                                        animationScale.getSpring().setDampingRatio(0.5f).setStiffness(100);
+                                                        animationScale.setStartVelocity(0.5f);
+                                                        animationScale.start();
+                                                    }
+                                                });
+                                                animationScale.start();
 
-                                    @Override
-                                    public void onAnimationEnd(Animator animation) {
+                                            }
 
-                                        animation.removeAllListeners();
-                                        animation.cancel();
-                                        switch ((int) view.getTag()) {
-                                            case 1:
+                                            @Override
+                                            public void onAnimationCancel(Animator animation) {
 
-                                                animate(100, 0.5f, 10f, 200f, 250f, 5f, 9.5f, 1000, 2, imageView);
-                                                break;
-                                            case 2:
-                                                animate(100, 0, 3f, 0, 0, 3f, 3f, 0, 3, no);
-                                                break;
-                                            case 3:
-                                                animate(100, 0, 5f, 0, 0, 5f, 5f, 0, 4, yes);
-                                                break;
-                                        }
+                                            }
 
-                                    }
+                                            @Override
+                                            public void onAnimationRepeat(Animator animation) {
 
-                                    @Override
-                                    public void onAnimationCancel(Animator animation) {
-
-                                    }
-
-                                    @Override
-                                    public void onAnimationRepeat(Animator animation) {
-
+                                            }
+                                        }).start();
                                     }
                                 });
+                                animationScale.start();
+                            }
+
+                            @Override
+                            public void onAnimationCancel(Animator animation) {
+
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animator animation) {
+
                             }
                         }).start();
+
                     }
-                }, 500);
+                },500);
 
             }
         });
         animationScale.start();
-    }
 
+    }
 
 }
