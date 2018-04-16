@@ -12,12 +12,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
-public class SpringAnim extends AppCompatActivity {
+public class SpringAnim extends AppCompatActivity implements View.OnClickListener {
 
     ImageView v, imageView, yes, no;
 
     FloatPropertyCompat<View> scale;
     SpringAnimation animationScale;
+
+    public static final float START_VELOCITY_05 = 0.5f;
+    public static final float START_VELOCITY_09 = 0.9f;
+    public static final float START_VELOCITY_15 = 1.5f;
+    public static final float STIFFNESS_LOW = 50;
+    public static final float STIFFNESS_MEDIUM = 300;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +34,8 @@ public class SpringAnim extends AppCompatActivity {
         imageView = findViewById(R.id.iv);
         yes = findViewById(R.id.yes);
         no = findViewById(R.id.no);
+
+        yes.setOnClickListener(this);
 
         scale = new FloatPropertyCompat<View>("scale") {
             @Override
@@ -52,8 +61,8 @@ public class SpringAnim extends AppCompatActivity {
         animationScale.setSpring(new SpringForce().setFinalPosition(10f));
         animationScale.setMinimumVisibleChange(
                 DynamicAnimation.MIN_VISIBLE_CHANGE_SCALE);
-        animationScale.getSpring().setDampingRatio(0.5f).setStiffness(50);
-        animationScale.setStartVelocity(0.5f);
+        animationScale.getSpring().setDampingRatio(SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY).setStiffness(STIFFNESS_LOW);
+        animationScale.setStartVelocity(START_VELOCITY_05);
         animationScale.addEndListener(new DynamicAnimation.OnAnimationEndListener() {
             @Override
             public void onAnimationEnd(DynamicAnimation animation, boolean canceled, float value, float velocity) {
@@ -76,8 +85,8 @@ public class SpringAnim extends AppCompatActivity {
                                 animationScale.setSpring(new SpringForce().setFinalPosition(10f));
                                 animationScale.setMinimumVisibleChange(
                                         DynamicAnimation.MIN_VISIBLE_CHANGE_SCALE);
-                                animationScale.getSpring().setDampingRatio(0.5f).setStiffness(100);
-                                animationScale.setStartVelocity(0.5f);
+                                animationScale.getSpring().setDampingRatio(SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY).setStiffness(STIFFNESS_MEDIUM);
+                                animationScale.setStartVelocity(START_VELOCITY_09);
                                 animationScale.addEndListener(new DynamicAnimation.OnAnimationEndListener() {
                                     @Override
                                     public void onAnimationEnd(DynamicAnimation animation, boolean canceled, float value, float velocity) {
@@ -94,8 +103,8 @@ public class SpringAnim extends AppCompatActivity {
                                                 animationScale.setSpring(new SpringForce().setFinalPosition(45f));
                                                 animationScale.setMinimumVisibleChange(
                                                         DynamicAnimation.MIN_VISIBLE_CHANGE_SCALE);
-                                                animationScale.getSpring().setDampingRatio(0.5f).setStiffness(100);
-                                                animationScale.setStartVelocity(0.5f);
+                                                animationScale.getSpring().setDampingRatio(SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY).setStiffness(STIFFNESS_MEDIUM);
+                                                animationScale.setStartVelocity(START_VELOCITY_15);
                                                 animationScale.addEndListener(new DynamicAnimation.OnAnimationEndListener() {
                                                     @Override
                                                     public void onAnimationEnd(DynamicAnimation animation, boolean canceled, float value, float velocity) {
@@ -105,8 +114,8 @@ public class SpringAnim extends AppCompatActivity {
                                                         animationScale.setSpring(new SpringForce().setFinalPosition(75f));
                                                         animationScale.setMinimumVisibleChange(
                                                                 DynamicAnimation.MIN_VISIBLE_CHANGE_SCALE);
-                                                        animationScale.getSpring().setDampingRatio(0.5f).setStiffness(100);
-                                                        animationScale.setStartVelocity(0.5f);
+                                                        animationScale.getSpring().setDampingRatio(SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY).setStiffness(STIFFNESS_MEDIUM);
+                                                        animationScale.setStartVelocity(START_VELOCITY_15);
                                                         animationScale.start();
                                                     }
                                                 });
@@ -141,7 +150,7 @@ public class SpringAnim extends AppCompatActivity {
                         }).start();
 
                     }
-                },500);
+                },300);
 
             }
         });
@@ -149,4 +158,11 @@ public class SpringAnim extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.yes:
+                break;
+        }
+    }
 }
