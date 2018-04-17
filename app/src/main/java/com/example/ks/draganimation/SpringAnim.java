@@ -7,6 +7,7 @@ import android.support.animation.DynamicAnimation;
 import android.support.animation.FloatPropertyCompat;
 import android.support.animation.SpringAnimation;
 import android.support.animation.SpringForce;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,6 +18,7 @@ public class SpringAnim extends AppCompatActivity implements View.OnClickListene
 
     FloatPropertyCompat<View> scale;
     SpringAnimation animationScale;
+    ConstraintLayout constraintLayoutAccel;
 
     public static final float START_VELOCITY_05 = 0.5f;
     public static final float START_VELOCITY_09 = 0.9f;
@@ -37,6 +39,7 @@ public class SpringAnim extends AppCompatActivity implements View.OnClickListene
         yes = findViewById(R.id.yes);
         no = findViewById(R.id.no);
         star = findViewById(R.id.star);
+        constraintLayoutAccel = findViewById(R.id.cl_accel);
 
         yes.setOnClickListener(this);
 
@@ -93,7 +96,7 @@ public class SpringAnim extends AppCompatActivity implements View.OnClickListene
                                 animationScale.addEndListener(new DynamicAnimation.OnAnimationEndListener() {
                                     @Override
                                     public void onAnimationEnd(DynamicAnimation animation, boolean canceled, float value, float velocity) {
-                                        imageView.animate().translationX(-250f).translationY(150f).scaleX(5f).scaleY(9.5f).setDuration(DURATION_500).setListener(new Animator.AnimatorListener() {
+                                        imageView.animate().translationX(-250f).translationY(150f).scaleX(10f).scaleY(10f).setDuration(DURATION_500).setListener(new Animator.AnimatorListener() {
                                             @Override
                                             public void onAnimationStart(Animator animation) {
                                             }
@@ -103,7 +106,7 @@ public class SpringAnim extends AppCompatActivity implements View.OnClickListene
                                                 animationScale = new SpringAnimation(no, scale);
                                                 no.setVisibility(View.VISIBLE);
                                                 animationScale.setStartValue(0);
-                                                animationScale.setSpring(new SpringForce().setFinalPosition(45f));
+                                                animationScale.setSpring(new SpringForce().setFinalPosition(75f));
                                                 animationScale.setMinimumVisibleChange(
                                                         DynamicAnimation.MIN_VISIBLE_CHANGE_SCALE);
                                                 animationScale.getSpring().setDampingRatio(SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY).setStiffness(STIFFNESS_MEDIUM);
@@ -114,7 +117,7 @@ public class SpringAnim extends AppCompatActivity implements View.OnClickListene
                                                         animationScale = new SpringAnimation(yes, scale);
                                                         yes.setVisibility(View.VISIBLE);
                                                         animationScale.setStartValue(0);
-                                                        animationScale.setSpring(new SpringForce().setFinalPosition(75f));
+                                                        animationScale.setSpring(new SpringForce().setFinalPosition(135f));
                                                         animationScale.setMinimumVisibleChange(
                                                                 DynamicAnimation.MIN_VISIBLE_CHANGE_SCALE);
                                                         animationScale.getSpring().setDampingRatio(SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY).setStiffness(STIFFNESS_MEDIUM);
@@ -172,6 +175,27 @@ public class SpringAnim extends AppCompatActivity implements View.OnClickListene
 
     private void goToTheAccel() {
         star.setVisibility(View.VISIBLE);
-        star.animate().scaleX(2000f).scaleY(2000f).alpha(0).setDuration(500).start();
+        star.animate().scaleX(3000f).scaleY(3000f).setDuration(500).setListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                constraintLayoutAccel.animate().alpha(1).setDuration(100).start();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        }).start();
+
     }
 }
